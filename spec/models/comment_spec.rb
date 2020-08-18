@@ -4,8 +4,8 @@ RSpec.describe Comment, type: :model do
   context 'validation tests'
 
   before :each do
-    @user = User.new(name: 'paul', email: 'paulo@microverse.org', password: 'password')
-    @post = Post.new(content: 'This is is a post')
+    @user = User.create(name: 'paul', email: 'paulo@microverse.org', password: 'password')
+    @post = Post.create(user_id: @user.id, content: 'This is is a post')
   end
 
   it 'should ensure a comment is present' do
@@ -28,4 +28,8 @@ RSpec.describe Comment, type: :model do
     expect(comment.save).to eq(false)
   end
 
+  it 'should successfully initialize comment if validation requirements are met' do
+    comment = Comment.new(user_id:  @user.id, post_id:  @post.id, content: 'This is a comment')
+    expect(comment.save).to eq(true)
+  end
 end
