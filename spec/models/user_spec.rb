@@ -12,6 +12,16 @@ RSpec.describe User, type: :model do
     expect(user2.save).to eq(false)
   end
 
+  it 'should ensure email is present' do
+    user2 = User.new(name: 'paul', email: nil, password: 'password')
+    expect(user2.save).to eq(false)
+  end
+
+  it 'should ensure password is present' do
+    user2 = User.new(name: 'paul', email: 'paulo@microverse.org', password: nil)
+    expect(user2.save).to eq(false)
+  end
+
   it 'should ensure name has maximum twenty characters' do
     user2 = User.new(name: '0123456789012345678901', email: 'paulo@microverse.org', password: 'password')
     expect(user2.save).to eq(false)
