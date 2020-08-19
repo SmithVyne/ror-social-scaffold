@@ -8,7 +8,7 @@ RSpec.describe Like, type: :model do
     @post = Post.create(user_id: @user.id, content: 'This is is a post')
   end
 
-  it 'should initialize a like' do
+  it 'should successfully initialize and create a like' do
     like = Like.new(user_id: @user.id, post_id: @post.id)
     expect(like.save).to eq(true)
   end
