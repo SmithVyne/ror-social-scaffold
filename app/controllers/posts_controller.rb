@@ -12,7 +12,7 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to posts_path, notice: 'Post was successfully created.'
     else
-      @timeline_posts
+      current_user.timeline_posts
       render :index, alert: 'Post was not created.'
     end
   end

@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
   has_many :friendships, foreign_key: :inviter_id
   has_many :invitations, class_name: 'Friendship', foreign_key: :invitee_id
-  
+
   # Well, these identify friends of the user
   has_many :accepted_friendships, -> { where status: true }, class_name: 'Friendship', foreign_key: 'inviter_id'
   has_many :accepted_friends, through: :accepted_friendships, source: :invitee
@@ -20,10 +20,10 @@ class User < ApplicationRecord
   has_many :accepted_invitations, -> { where status: true }, class_name: 'Friendship', foreign_key: 'invitee_id'
   has_many :accepted_inviters, through: :accepted_invitations, source: :inviter
 
-  has_many :pending_friendships, -> { where status: false }, class_name: "Friendship", foreign_key: "inviter_id"
+  has_many :pending_friendships, -> { where status: false }, class_name: 'Friendship', foreign_key: 'inviter_id'
   has_many :pending_friends, through: :pending_friendships, source: :invitee
 
-  has_many :friendship_requests, -> { where status: false }, class_name: "Friendship", foreign_key: "invitee_id"
+  has_many :friendship_requests, -> { where status: false }, class_name: 'Friendship', foreign_key: 'invitee_id'
   has_many :friend_requests, through: :friendship_requests, source: :inviter
 
   def friends
@@ -41,6 +41,6 @@ class User < ApplicationRecord
   end
 
   def timeline_posts
-    Post.where(user: (self.friends << self)).ordered_by_most_recent
+    Post.where(user: (friends << self)).ordered_by_most_recent
   end
 end
