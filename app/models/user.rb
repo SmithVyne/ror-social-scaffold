@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 20 }
 
-  has_many :posts
+  has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
 
@@ -15,7 +15,7 @@ class User < ApplicationRecord
 
   def friends
     friends_array = friendships.map { |friendship| friendship.invitee if friendship.status }
-    invitations_array = invitations.map { |friendship| friendship.user if friendship.status }
+    invitations_array = invitations.map { |invitation| invitation.inviter if invitation.status }
     friends_array.compact + invitations_array.compact
   end
 
@@ -24,7 +24,7 @@ class User < ApplicationRecord
   end
 
   def friend_requests
-    friendships.map { |friendship| friendship.user unless friendship.status }.compact
+    invitations.map { |invitation| invitation.inviter unless invitation.status }.compact
   end
 
   def friend?(user)
