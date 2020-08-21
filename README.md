@@ -9,7 +9,7 @@
 
 ## Live Demo
 
-[https://hidden-escarpment-26263.herokuapp.com/](https://hidden-escarpment-26263.herokuapp.com/)
+[Link to Demo](https://hidden-escarpment-26263.herokuapp.com/)
 
 
 ## Getting Started
