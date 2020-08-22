@@ -72,11 +72,6 @@ Open `http://localhost:3000/` in your browser.
 - Twitter: [@SmithVyne](https://twitter.com/SmithVyne)
 - Email: [email me](mailto:smithnkereuwem2@gmail.com)
 
-## 🤝 Contributing
-
-Contributions, issues and feature requests are welcome!
-
-Feel free to check the [issues page](issues/).
 
 ## Show your support
 
