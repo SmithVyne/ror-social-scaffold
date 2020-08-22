@@ -1,6 +1,6 @@
-# Scaffold for social media app with Ruby on Rails
+# Social Media Project
 
-> This repo includes intial code for social media app with basic styling. Its purpose is to be a starting point for Microverse students.
+> STAY IN TOUCH social media project by Microverse
 
 ## Built With
 
@@ -9,7 +9,7 @@
 
 ## Live Demo
 
-TBA
+[Link to Demo](https://hidden-escarpment-26263.herokuapp.com/)
 
 
 ## Getting Started
@@ -24,7 +24,7 @@ Postgres: >=9.5
 
 ### Setup
 
-Instal gems with:
+Install gems with:
 
 ```
 bundle install
@@ -55,15 +55,22 @@ Open `http://localhost:3000/` in your browser.
     rpsec --format documentation
 ```
 
-> Tests will be added by Microverse students. There are no tests for initial features in order to make sure that students write all tests from scratch.
+> Tests are included
 
-### Deployment
-
-TBA
 
 ## Authors
 
-TBA
+
+👤 **Paul Omondi**
+
+- Github: [@paulo-techie](https://github.com/paulo-techie)
+- Email: [email me](mailto:paulo.techie@gmail.com)
+
+👤 **Smith Nkereuwem**
+
+- Github: [@SmithVyne](https://github.com/SmithVyne)
+- Twitter: [@SmithVyne](https://twitter.com/SmithVyne)
+- Email: [email me](mailto:smithnkereuwem2@gmail.com)
 
 ## 🤝 Contributing
 
@@ -78,8 +85,3 @@ Give a ⭐️ if you like this project!
 ## Acknowledgments
 
 TBA
-
-## 📝 License
-
-TBA
-
