@@ -155,12 +155,12 @@ form {
       padding: 8px;
       background-color: $primary-color-light;
     }
-
+/****** linters: invalid value for width 
     input[type="checkbox"] {
       width: fit-content;
     }
   }
-
+*********/
   .actions {
     display: flex;
     justify-content: center;
