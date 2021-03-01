@@ -1,9 +1,9 @@
 <li>
-  <div class="d-flex justify-content-between" style="width: 28rem;">
-    <h3 class="fw-bold">Name: <%= user.name %></h3>
-    <span class="d-flex justify-content-start" style="width: 12rem;">
-      <%= link_to 'See Profile',  user_path(user), class: 'btn btn-outline-light' %>
-      <%= link_to 'Add Friend', friendships_path(:friend_id => user), method: :post, class: 'btn btn-success btn-sm' unless current_user == user %>
+  <div class="d-flex justify-content-between pt-2 pb-3 border-bottom border-3 border-secondary" style="width: 29rem;">
+    <h3 class="fw-bold text-success"><%= user.name %></h3>
+    <span class="d-flex justify-content-between" style="width: 12rem;">
+      <%= link_to 'See Profile',  user_path(user), class: 'btn btn-outline-success btn-sm mb-2' %>
+      <%= link_to 'Add Friend', friendships_path(:friend_id => user, :confirmed => false), method: :post, class: 'mb-2 btn-sm btn btn-success' unless current_user == user %>
     </span>
   </div>
 </li>

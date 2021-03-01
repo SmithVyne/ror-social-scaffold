@@ -10,9 +10,11 @@ class UsersController < ApplicationController
     # @users = User.all
     @posts = @user.posts.ordered_by_most_recent
     @friends = current_user.friends
+    # @friend_requestor = current_user.inverse_friendships
     # Users who have yet to confirm friend requests
-    @pending_friend_responses = current_user.pending_friend_responses
+    #@pending_friend_responses = current_user.pending_friend_responses
     # Users who have requested to be friends
-    #@pending_friend_requests = current_user.pending_friend_requests
+    @pending_friend_requests = current_user.pending_friend_requests
+    #@accept_friendship = current_user.confirm_friend(@user)
   end
 end

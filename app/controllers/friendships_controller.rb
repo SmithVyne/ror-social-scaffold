@@ -26,7 +26,7 @@ class FriendshipsController < ApplicationController
   # POST /friendships
   # POST /friendships.json
   def create
-    @friendship = current_user.friendships.build(friend_id: params[:friend_id])
+    @friendship = current_user.friendships.build(friend_id: params[:friend_id], confirmed: params[:confirmed])
 
     respond_to do |format|
       if @friendship.save
@@ -43,8 +43,8 @@ class FriendshipsController < ApplicationController
   
   #   @friendship.status = true
   #   if @friendship.save, notice: 'Friend Request Accepted!'
-  #     @friendship2 = current_user.friend_sent.build(friend_id: params[:user_id], status: true)
-  #     @friendship2.save
+  #     # @friendship2 = current_user.friend_sent.build(friend_id: params[:user_id], status: true)
+  #     # @friendship2.save
   #   end
   # end
 
