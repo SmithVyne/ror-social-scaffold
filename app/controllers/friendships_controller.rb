@@ -26,39 +26,34 @@ class FriendshipsController < ApplicationController
   # POST /friendships
   # POST /friendships.json
   def create
-    return if current_user.id == params[:user_id]
-    return if friend_request_sent?(User.find(params[:user_id]))
-    return if friend_request_received?(User.find(params[:user_id]))
-
-    @friendship = current_user.friend_sent.build(friend_id: params[:user_id])
+    @friendship = current_user.friendships.build(friend_id: params[:friend_id])
 
     respond_to do |format|
       if @friendship.save
-        format.html { redirect_to @friendship, notice: 'Friendship was successfully created.' }
+        format.html { redirect_to @friendship, notice: 'Added friend.' }
       else
-        format.html { render :new }, notice: 'Friend request failed.'
+        format.html { redirect_to root_url, notice: 'Unable to add friend.' }
       end
-      redirect_to user_path(current_user.id)
     end
   end
 
-  def accept_invitation
-    @friendship = Friendship.find_by(user_id: params[:user_id], friend_id: current_user.id, status: false)
-    return unless @friendship
+  # def accept_invitation
+  #   @friendship = Friendship.find_by(user_id: params[:user_id], friend_id: current_user.id, status: false)
+  #   return unless @friendship
   
-    @friendship.status = true
-    if @friendship.save, notice: 'Friend Request Accepted!'
-      @friendship2 = current_user.friend_sent.build(friend_id: params[:user_id], status: true)
-      @friendship2.save
-    end
-  end
+  #   @friendship.status = true
+  #   if @friendship.save, notice: 'Friend Request Accepted!'
+  #     @friendship2 = current_user.friend_sent.build(friend_id: params[:user_id], status: true)
+  #     @friendship2.save
+  #   end
+  # end
 
-    def decline_invitation
-      @friendship = Friendship.find_by(user_id: params[:user_id], friend_id: current_user.id, status: false)
-      return unless @friendship
-      @friendship.destroy
-    end
-  end
+  #   def decline_invitation
+  #     @friendship = Friendship.find_by(user_id: params[:user_id], friend_id: current_user.id, status: false)
+  #     return unless @friendship
+  #     @friendship.destroy
+  #   end
+  # end
 
   # PATCH/PUT /friendships/1
   # PATCH/PUT /friendships/1.json

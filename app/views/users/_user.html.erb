@@ -1,7 +1,9 @@
 <li>
-  Name: <%= user.name %>
-  <span class="profile-link">
-    <%= link_to 'See Profile',  user_path(user), class: 'profile-link' %>
-    <%= link_to 'Invite to Friendship', new_friendship_path(user), class: 'btn btn-success' %>
-  </span>
+  <div class="d-flex justify-content-between" style="width: 28rem;">
+    <h3 class="fw-bold">Name: <%= user.name %></h3>
+    <span class="d-flex justify-content-start" style="width: 12rem;">
+      <%= link_to 'See Profile',  user_path(user), class: 'btn btn-outline-light' %>
+      <%= link_to 'Add Friend', friendships_path(:friend_id => user), method: :post, class: 'btn btn-success btn-sm' unless current_user == user %>
+    </span>
+  </div>
 </li>

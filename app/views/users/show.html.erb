@@ -1,16 +1,20 @@
 <section class="user-section border" style="width: 65rem;">
-<div class="d-flex justify-content-between">
-<div class="d-flex flex-column border" style="width: 40rem;">
-  <h2><%= "Name: #{@user.name}" %></h2>
-  <article class="timeline">
-    <h3>Recent posts:</h3>
-    <ul class="posts">
-      <%= render @posts %>
-    </ul>
-  </article>
-  </div>
-  <div class="border" style="width: 15rem;">
-    <h2>Friend Requests</h2>
+  <div class="d-flex justify-content-between">
+    <div class="d-flex flex-column border" style="width: 40rem;">
+      <h2><%= "Name: #{@user.name}" %></h2>
+      <%= show_friendship_btn %>
+      <article class="timeline">
+        <h3>Recent posts:</h3>
+        <ul class="posts">
+          <%= render @posts %>
+        </ul>
+      </article>
+    </div>
+  <div class="border" style="width: 20rem;">
+    <h3>Friend Requests</h3>
+    <% @user.pending_friend_responses.each do |friendship| %>
+      <%= @user.name %>
+    <% end %>
   </div>
   </div>
 </section>

@@ -12,31 +12,20 @@ class User < ApplicationRecord
   has_many :friendships
   has_many :inverse_friendships, class_name: 'Friendship', foreign_key: 'friend_id'
 
-  has_many :friends, -> { merge(Friendship.friends) },
-            through: :friend_sent, source: :friend
-  has_many :friend_sent, class_name: 'Friendship', foreign_key: 'user_id',
-            inverse_of: 'user', dependent: :destroy
-  has_many :friend_request, class_name: 'Friendship', foreign_key: 'friend_id',
-            inverse_of: 'friend', dependent: :destroy
-  has_many :pending_requests, -> { merge(Friendship.not_friends) },
-            through: :friend_sent, source: :friend
-  has_many :received_requests, -> { merge(Friendship.not_friends) },
-            through: :friend_request, source: :user
-
   def friends
     friends_arr = friendships.map { |friendship| friendship.friend if friendship.confirmed }
-    inverse_friendships.map { |friendship| friendship.user if friendship.confirmed }
-    friends_arr + inverse_friendships.compact
+    friends_arr + inverse_friendships.map { |friendship| friendship.user if friendship.confirmed }
+    friends_arr.compact
   end
 
-  # Users who have yet to confirme friend requests
-  def pending_friends
+  # Users who have yet to confirm friend requests
+  def pending_friend_responses
     friendships.map{ |friendship| friendship.friend if !friendship.confirmed }
     friendships.compact
   end
 
   # Users who have requested to be friends
-  def friend_requests
+  def pending_friend_requests
     inverse_friendships.map{ |friendship| friendship.user if !friendship.confirmed }
     inverse_friendships.compact
   end
