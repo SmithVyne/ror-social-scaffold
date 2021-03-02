@@ -1,12 +1,13 @@
 class FriendshipsController < ApplicationController
   include ApplicationHelper
 
-  before_action :set_friendship, only: [:show, :edit, :update, :destroy]
+  before_action :set_friendship, only: [:show, :destroy]
 
   # GET /friendships
   # GET /friendships.json
   def index
     @friendships = Friendship.all
+    @friends = current_user.friends
   end
 
   # GET /friendships/1
@@ -37,22 +38,23 @@ class FriendshipsController < ApplicationController
     end
   end
 
-  # def accept_invitation
-  #   @friendship = Friendship.find_by(user_id: params[:user_id], friend_id: current_user.id, status: false)
-  #   return unless @friendship
+  def accept_friendship
+    @friendship = Friendship.find_by(friendship_params)
+    return unless @friendship
   
-  #   @friendship.status = true
-  #   if @friendship.save, notice: 'Friend Request Accepted!'
-  #     # @friendship2 = current_user.friend_sent.build(friend_id: params[:user_id], status: true)
-  #     # @friendship2.save
-  #   end
-  # end
+    @friendship.confirmed = true
+    if @friendship.save
+      redirect_to friendships_path(@user), notice: 'Friend Request Accepted!'
+    end
+  end
 
-  #   def decline_invitation
-  #     @friendship = Friendship.find_by(user_id: params[:user_id], friend_id: current_user.id, status: false)
-  #     return unless @friendship
-  #     @friendship.destroy
-  #   end
+  # def delete_friendship
+  #   @friendship = Friendship.find_by(friendship_params)
+  #   return unless @friendship
+
+  #   @friendship.confirmed = false
+  #   @friendship.destroy
+  #   redirect_to friendships_path(@user.id), notice: 'Friend Request Not Accepted.'
   # end
 
   # PATCH/PUT /friendships/1
@@ -72,11 +74,12 @@ class FriendshipsController < ApplicationController
   # DELETE /friendships/1
   # DELETE /friendships/1.json
   def destroy
+    @friendship = Friendship.find_by(friendship_params)
+    return unless @friendship
+
+    @friendship.confirmed = false
     @friendship.destroy
-    respond_to do |format|
-      format.html { redirect_to friendships_url, notice: 'Friendship was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to friendships_path(@user.id), notice: 'Friend Request Not Accepted.'
   end
 
   private

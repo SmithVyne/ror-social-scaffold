@@ -8,6 +8,4 @@ module FriendshipsHelper
 
     render 'users/show_friend_requests'
   end
-
-
 end

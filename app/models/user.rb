@@ -18,25 +18,9 @@ class User < ApplicationRecord
     friends_arr.compact
   end
 
-  # Users who have yet to confirm friend requests
-  def pending_friend_responses
-    friendships.map { |friendship| friendship.friend if !friendship.confirmed }
-    friendships.compact
-  end
-
   # Users who have requested to be friends
   def pending_friend_requests
     inverse_friendships.map { |friendship| friendship.user if !friendship.confirmed }
     inverse_friendships.compact
-  end
-
-  def confirm_friend(user)
-    friendship = inverse_friendships.find { |friendship| friendship.user == user }
-    friendship.confirmed = true
-    friendship.save
-  end
-
-  def friend?(user)
-    friends.include?(user)
   end
 end
