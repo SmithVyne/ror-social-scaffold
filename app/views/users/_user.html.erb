@@ -3,7 +3,7 @@
     <h3 class="fw-bold text-success"><%= user.name %></h3>
     <span class="d-flex justify-content-between" style="width: 12rem;">
       <%= link_to 'See Profile',  user_path(user), class: 'btn btn-outline-success btn-sm mb-2' %>
-      <%= link_to 'Add Friend', friendships_path(:friend_id => user, :confirmed => false), method: :post, class: 'mb-2 btn-sm btn btn-success' unless current_user == user %>
+      <%= index_friendship_btn(user) %>
     </span>
   </div>
 </li>

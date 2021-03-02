@@ -9,18 +9,22 @@ class User < ApplicationRecord
   has_many :posts
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
-  has_many :friendships
+  has_many :friendships #foreign_key: 'user_id'
   has_many :inverse_friendships, class_name: 'Friendship', foreign_key: 'friend_id'
 
   def friends
     friends_arr = friendships.map { |friendship| friendship.friend if friendship.confirmed }
-    friends_arr + inverse_friendships.map { |friendship| friendship.user if friendship.confirmed }
+    inverse_friendships.map { |friendship| friends_arr.push(friendship.user) if friendship.confirmed }
     friends_arr.compact
   end
 
   # Users who have requested to be friends
   def pending_friend_requests
-    inverse_friendships.map { |friendship| friendship.user if !friendship.confirmed }
+    inverse_friendships.map { |friendship| friendship.user unless friendship.confirmed }
     inverse_friendships.compact
+  end
+
+  def friend?(user)
+    friends.include?(user)
   end
 end

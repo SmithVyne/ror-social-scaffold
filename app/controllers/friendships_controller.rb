@@ -27,13 +27,13 @@ class FriendshipsController < ApplicationController
   # POST /friendships
   # POST /friendships.json
   def create
-    @friendship = current_user.friendships.build(friend_id: params[:friend_id], confirmed: params[:confirmed])
+    @friendship = current_user.friendships.build(friendship_params)
 
     respond_to do |format|
       if @friendship.save
-        format.html { redirect_to @friendship, notice: 'Added friend.' }
+        format.html { redirect_back fallback_location: @users, notice: 'Friend request sent succesfully.' }
       else
-        format.html { redirect_to root_url, notice: 'Unable to add friend.' }
+        format.html { redirect_back fallback_location: @users, notice: 'Unable to add friend.' }
       end
     end
   end
@@ -42,9 +42,11 @@ class FriendshipsController < ApplicationController
     @friendship = Friendship.find_by(friendship_params)
     return unless @friendship
   
-    @friendship.confirmed = true
-    if @friendship.save
-      redirect_to friendships_path(@user), notice: 'Friend Request Accepted!'
+    if @friendship.confirmed = true
+      @friendship.save
+      if @friendship.save
+        redirect_to friendships_path(@user), notice: 'Friend Request Accepted!'
+      end
     end
   end
 
