@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :friendships, except: [:edit, :update]
+  resources :friendships
   root 'posts#index'
 
   devise_for :users

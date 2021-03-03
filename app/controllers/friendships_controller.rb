@@ -27,13 +27,13 @@ class FriendshipsController < ApplicationController
   # POST /friendships
   # POST /friendships.json
   def create
-    @friendship = current_user.friendships.build(friendship_params)
+    @friendship = current_user.friendships.build(friend_id: params[:friend_id], confirmed: false)
 
     respond_to do |format|
       if @friendship.save
-        format.html { redirect_back fallback_location: @users, notice: 'Friend request sent succesfully.' }
+        format.html { redirect_back fallback_location: @users, :notice => 'Friend request sent succesfully.' }
       else
-        format.html { redirect_back fallback_location: @users, notice: 'Unable to add friend.' }
+        format.html { redirect_back fallback_location: @users, :notice => 'Unable to add friend.' }
       end
     end
   end
@@ -42,36 +42,26 @@ class FriendshipsController < ApplicationController
     @friendship = Friendship.find_by(friendship_params)
     return unless @friendship
   
-    if @friendship.confirmed = true
-      @friendship.save
-      if @friendship.save
-        redirect_to friendships_path(@user), notice: 'Friend Request Accepted!'
-      end
+    @friendship.confirmed = true
+    @friends = current_user.friends
+    if @friendship.save
+      redirect_to friendships_path(@user), notice: 'Friend Request Accepted!'
     end
   end
-
-  # def delete_friendship
-  #   @friendship = Friendship.find_by(friendship_params)
-  #   return unless @friendship
-
-  #   @friendship.confirmed = false
-  #   @friendship.destroy
-  #   redirect_to friendships_path(@user.id), notice: 'Friend Request Not Accepted.'
-  # end
 
   # PATCH/PUT /friendships/1
   # PATCH/PUT /friendships/1.json
-  def update
-    respond_to do |format|
-      if @friendship.update(friendship_params)
-        format.html { redirect_to @friendship, notice: 'Friendship was successfully updated.' }
-        format.json { render :show, status: :ok, location: @friendship }
-      else
-        format.html { render :edit }
-        format.json { render json: @friendship.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  # def update
+  #   respond_to do |format|
+  #     if @friendship.update(friendship_params)
+  #       format.html { redirect_to @friendship, notice: 'Friendship was successfully updated.' }
+  #       format.json { render :show, status: :ok, location: @friendship }
+  #     else
+  #       format.html { render :edit }
+  #       format.json { render json: @friendship.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   # DELETE /friendships/1
   # DELETE /friendships/1.json
@@ -81,7 +71,7 @@ class FriendshipsController < ApplicationController
 
     @friendship.confirmed = false
     @friendship.destroy
-    redirect_to friendships_path(@user.id), notice: 'Friend Request Not Accepted.'
+    redirect_to friendships_path(@user), notice: 'Friend Request Not Accepted.'
   end
 
   private

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Friendship', type: :feature do
   let(:user1) { User.create(name: 'Richard', email: 'rick@user1.com', password: '123456', id: 1) }
   let(:user2) { User.create(name: 'Robert', email: 'robert@user2.com', password: '123456', id: 2) }
-  let(:friendship) { Friendship.create(user_id: 1, friend_id: 2, confirmed: true, id: 1) }
+  let(:friendship) { Friendship.new(user_id: 1, friend_id: 2, confirmed: true, id: 1) }
 
   def login(user1)
     visit '/users/sign_in'
@@ -20,26 +20,14 @@ RSpec.describe 'Friendship', type: :feature do
   end
 
   context 'click on Add Friend button' do
-    it 'displays Added friend alert' do
+    it 'shows the name of the friendship requestor on the friendship receiver show page'  do
       login(user2)
       visit '/users'
-      click_link 'Add Friend'
-      page.should have_content('Added friend.')
+      first(".mb-2").click
+      click_link 'Sign out'
+      login(user1)
+      visit user_path(user1)
+      page.should have_content('Richard')
     end
   end
-
-  # describe 'see another user main page' do
-  #   it 'displays recent posts from user' do
-  #     user1.save
-  #     user2.save
-  #     login(user2)
-  #     fill_in 'Add New Post', with: post.content
-  #     click_button
-  #     click_link 'Sign out'
-  #     login(user1)
-  #     visit '/users'
-  #     first(".btn-outline-success").click
-  #     page.should have_content('Recent posts:')
-  #   end
-  # end
 end
