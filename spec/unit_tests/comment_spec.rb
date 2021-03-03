@@ -17,14 +17,4 @@ RSpec.describe Comment, type: :model do
       expect(comment).to_not be_valid
     end
   end
-
-  context 'association' do
-    it 'belongs to user' do
-      should belong_to(:user)
-    end
-
-    it 'belongs to post' do
-      should belong_to(:post)
-    end
-  end
 end
