@@ -11,12 +11,14 @@ module FriendshipsHelper
 
   def index_friendship_btn(user)
     if Friendship.find_by(user_id: current_user.id, friend_id: user.id)
-       || Friendship.find_by(user_id: user.id, friend_id: current_user.id)
       return
-    end
-
-    unless current_user.id == user.id
-      link_to 'Add Friend', friendships_path(friend_id: user.id), method: :post, class: 'mb-2 btn-sm btn btn-success'
+    elsif
+      Friendship.find_by(user_id: user.id, friend_id: current_user.id)
+      return
+    else
+      unless current_user.id == user.id
+        link_to 'Add Friend', friendships_path(friend_id: user.id), method: :post, class: 'mb-2 btn-sm btn btn-success'
+      end
     end
   end
 
