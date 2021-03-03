@@ -1,7 +1,7 @@
 class FriendshipsController < ApplicationController
   include ApplicationHelper
 
-  before_action :set_friendship, only: [:show, :destroy]
+  before_action :set_friendship, only: %i[show destroy]
 
   # GET /friendships
   # GET /friendships.json
@@ -12,8 +12,7 @@ class FriendshipsController < ApplicationController
 
   # GET /friendships/1
   # GET /friendships/1.json
-  def show
-  end
+  def show; end
 
   # GET /friendships/new
   def new
@@ -21,8 +20,7 @@ class FriendshipsController < ApplicationController
   end
 
   # GET /friendships/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /friendships
   # POST /friendships.json
@@ -31,9 +29,9 @@ class FriendshipsController < ApplicationController
 
     respond_to do |format|
       if @friendship.save
-        format.html { redirect_back fallback_location: @users, :notice => 'Friend request sent succesfully.' }
+        format.html { redirect_back fallback_location: @users, notice: 'Friend request sent succesfully.' }
       else
-        format.html { redirect_back fallback_location: @users, :notice => 'Unable to add friend.' }
+        format.html { redirect_back fallback_location: @users, notice: 'Unable to add friend.' }
       end
     end
   end
@@ -41,12 +39,10 @@ class FriendshipsController < ApplicationController
   def accept_friendship
     @friendship = Friendship.find_by(friendship_params)
     return unless @friendship
-  
+
     @friendship.confirmed = true
     @friends = current_user.friends
-    if @friendship.save
-      redirect_to friendships_path(@user), notice: 'Friend Request Accepted!'
-    end
+    redirect_to friendships_path(@user), notice: 'Friend Request Accepted!' if @friendship.save
   end
 
   # DELETE /friendships/1
@@ -61,13 +57,14 @@ class FriendshipsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_friendship
-      @friendship = Friendship.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def friendship_params
-      params.fetch(:friendship, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_friendship
+    @friendship = Friendship.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def friendship_params
+    params.fetch(:friendship, {})
+  end
 end

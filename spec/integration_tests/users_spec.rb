@@ -52,7 +52,7 @@ RSpec.describe 'User', type: :feature do
       click_link 'Sign out'
       login(user1)
       visit '/users'
-      first(".btn-outline-success").click
+      first('.btn-outline-success').click
       page.should have_content('Recent posts:')
     end
   end

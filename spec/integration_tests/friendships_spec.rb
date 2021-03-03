@@ -20,10 +20,10 @@ RSpec.describe 'Friendship', type: :feature do
   end
 
   context 'click on Add Friend button' do
-    it 'shows the name of the friendship requestor on the friendship receiver show page'  do
+    it 'shows the name of the friendship requestor on the friendship receiver show page' do
       login(user2)
       visit '/users'
-      first(".mb-2").click
+      first('.mb-2').click
       click_link 'Sign out'
       login(user1)
       visit user_path(user1)
