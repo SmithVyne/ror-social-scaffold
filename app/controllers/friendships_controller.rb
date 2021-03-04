@@ -37,12 +37,11 @@ class FriendshipsController < ApplicationController
   end
 
   def accept_friendship
-    @friendship = Friendship.find_by(friendship_params)
-    return unless @friendship
-
-    @friendship.confirmed = true
-    @friends = current_user.friends
-    redirect_to friendships_path(@user), notice: 'Friend Request Accepted!' if @friendship.save
+    if who_sent_invite.confirm_friend(who_received_invite)
+      redirect_to friendships_path(@user), notice: 'Friend Request Accepted!'
+    else
+      redirect_to friendships_path(@user), notice: 'Unable to accept friend request'
+    end
   end
 
   # DELETE /friendships/1
@@ -65,6 +64,15 @@ class FriendshipsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def friendship_params
-    params.fetch(:friendship, {})
+    { user_id: params[:user_id], friend_id: params[:friend_id], confirmed: false }
+    # params.fetch(:friendship, {})
+  end
+
+  def who_sent_invite
+    User.find(friendship_params[:user_id])
+  end
+
+  def who_received_invite
+    User.find(friendship_params[:friend_id])
   end
 end
