@@ -7,7 +7,8 @@ module FriendshipsHelper
     else
       return if current_user.id == @user.id
 
-      link_to 'Add Friend', friendships_path(friend_id: @user.id), method: :post, class: 'btn btn-success pt-2'
+      link_to 'Add Friend', friendships_path(user_id: current_user.id,
+                                             friend_id: @user.id), method: :post, class: 'btn btn-success pt-2'
     end
   end
 
@@ -19,7 +20,8 @@ module FriendshipsHelper
     else
       return if current_user.id == user.id
 
-      link_to 'Add Friend', friendships_path(friend_id: user.id), method: :post, class: 'mb-2 btn-sm btn btn-success'
+      link_to 'Add Friend', friendships_path(user_id: current_user.id,
+                                             friend_id: user.id), method: :post, class: 'mb-2 btn-sm btn btn-success'
     end
   end
 

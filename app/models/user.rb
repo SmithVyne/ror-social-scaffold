@@ -18,17 +18,23 @@ class User < ApplicationRecord
     friends_arr.compact
   end
 
-  def confirm_friend(who_sent_invite)
-    friendship = inverse_friendships.find { |friendship| friendship.user == who_sent_invite }
+  def confirm_friend(friend)
+    friendship = Friendship.find_by(user_id: friend.id, friend_id: id)
     friendship.confirmed = true
     friendship.save
-    return friendship.confirmed
   end
 
-  # Users who have requested to be friends
   def pending_friend_requests
-    inverse_friendships.map { |friendship| friendship.user unless friendship.confirmed }
-    inverse_friendships.compact
+    inverse_friendships.select { |friendship| friendship.user unless friendship.confirmed }
+  end
+
+  def pending_requests
+    inverse_friendships.each { |friendship| return false unless friendship.confirmed }
+  end
+
+  def decline_friendship(friend)
+    friendship = Friendship.find_by(user_id: friend.id, friend_id: id)
+    friendship.destroy
   end
 
   def friend?(user)

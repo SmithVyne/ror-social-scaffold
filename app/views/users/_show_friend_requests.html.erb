@@ -5,8 +5,8 @@
       <div class="d-flex justify-content-between pb-3 border-bottom border-success mb-3">
         <h5><%= User.find_by(id: friendship.user_id).name %></h5>
         <div class="d-flex justify-content-between" style="width: 15rem;">
-          <%= link_to 'Ok!, accept', accept_friendship_path(:user_id => @user.id, :friend_id => current_user.id), method: :post, class: 'btn btn-success btn-sm' %>
-          <%= link_to 'No thanks,  decline', friendship_path(:user_id => @user.id, :friend_id => current_user.id), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-secondary btn-sm' %>
+          <%= link_to 'Ok!, accept', accept_friendship_path(:user_id => friendship.user_id, :friend_id => @user.id), method: :post, class: 'btn btn-success btn-sm' %>
+          <%= link_to 'No thanks,  decline', friendship_path(:user_id => friendship.user_id, :friend_id => @user.id), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-secondary btn-sm' %>
         </div>
       </div>
     <% end %>
