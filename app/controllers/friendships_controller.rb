@@ -30,8 +30,6 @@ class FriendshipsController < ApplicationController
   end
 
   def accept_friendship
-    puts who_received_invite.id
-    puts who_sent_invite.id
     if who_received_invite.confirm_friend(who_sent_invite)
       redirect_to friendships_path(@user), notice: 'Friend Request Accepted!'
     else
